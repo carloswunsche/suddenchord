@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
+    <script defer type="text/javascript" src="script.js"></script>
     <title>SuddenChord App</title>
   </head>
 
@@ -11,18 +12,35 @@
   <body>
     <div class="main-container">
         <h1>SuddenChord App</h1>
-        <button>Setup</button>
-        <div class="current chord">Dm</div>
-        <div class="next">
-            <p>Next:</p>
-            <div class="chord">G7</div>
+
+        <button class="modal-open" id="modal">Setup</button>
+
+        <!-- Setup Modal Window -->
+        <div class="overlay"></div>
+        <div class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">Setup</h2>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi tempore repellendus fugit unde, at blanditiis corporis nam. Asperiores commodi soluta error odit libero in facilis illo cumque laborum!</p>
+          </div>
         </div>
-        <div class="footer"><p>SuddenChord App &#169; 2021</p></div>
+
+        <!-- Current Chord -->
+        <div class="current">
+          <div class="chord">Dm</div>
+        </div>
+        <!-- Next Chord -->
+        <div class="next">
+          <span>Next:</span>
+          <div class="chord">G7</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">SuddenChord App &#169; 2021</div>
     </div>
-  <script type="text/javascript" src="script.js"></script>
   </body>
-
-
 </html>
 
 <!-- Karl's notes:
@@ -30,4 +48,5 @@ Use "slash" convention in css:
 your-name instead of yourName
 
 &#9837; is the flat sign
+&times; is the multiplication sign
 -->

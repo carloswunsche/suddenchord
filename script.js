@@ -8,7 +8,7 @@ const changeCurChord = function(newChord = 'C') {
     minor = !minor;
     if (minor) newChord = newChord + 'm';
     //Display new chord
-    document.querySelector('.current').textContent = newChord;
+    document.querySelector('.current .chord').textContent = newChord;
 };
 
 

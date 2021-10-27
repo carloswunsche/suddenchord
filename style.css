@@ -1,88 +1,107 @@
 /* Global reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
   
 
-  html {
-    height: 100%;
-  }
+html {
+  height: 100%;
+}
   
-  body {
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-    padding: 42px;
-    height: 100%;
-  }
-
-  h1 {
-      text-align: center;
-      font-size: 26px;
-      padding: 30px 0;
-  }
-
-  .main-container {
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(237,237,237,1) 48%, rgba(255,255,255,1) 100%);
-    border-radius: 10px;
-    height: 100%;
-    box-shadow: 3px 3px 12px #424242;
-    position: relative;
-  }
-
-  button {
-      padding: 5px;
-      margin: 0 20px;
-      text-align: left;
-  }
-
-  .chord {
-      text-align: center;
-      font-weight: bold;
-      font-size: 120px;
-      width: 100%;
-      background: -webkit-linear-gradient(rgb(127, 98, 255), #333);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      padding: 45px 0 0 0;
-  }
-
-  .next {
-    margin-right: 40px;
-    text-align: right;
+body {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  padding: 42px;
+  height: 100%;
 }
 
-  .next p {
-    font-style: italic;
-    text-align: center;
-    font-size: 22px;
-    display: inline;
-    margin-right: 5px
+h1 {
+  text-align: center;
+  font-size: 26px;
+  padding: 30px 0;
 }
 
-  .next .chord {
-    margin: 0;
-    padding: 0;
-    font-size: 45px;
-    display: inline;
+.main-container {
+  background: rgb(255,255,255);
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(237,237,237,1) 48%, rgba(255,255,255,1) 100%);
+  border-radius: 10px;
+  height: 100%;
+  box-shadow: 3px 3px 12px #424242;
+  position: relative;
+}
+
+button {
+  padding: 5px;
+  margin: 0 20px;
+  text-align: left;
+}
+
+.current {
+  width: min-content;
+  margin: 10px auto;
+  padding: 0;
+}
+
+.chord {
+  font-weight: bold;
+  width: min-content;
+  background: -webkit-linear-gradient(rgb(127, 98, 255), #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.current .chord {
+  font-size: 120px;
+}
+
+.next {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right: 90px;
+}
+
+.next span{
+  font-style: italic;
+  font-size: 22px;
+  padding-right: 10px;
+}
+
+.next .chord {
+  font-size: 3rem;
 }
 
 .footer {
-    background-color: #cbe3ff;
-    height: 100px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    border-radius: 0 0 10px 10px;
+  background-color: #cbe3ff;
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+  font-size: 15px;
+  color: #727272;
+  padding-top: 40px;
 
 }
 
-.footer p {
-    text-align: center;
-    margin: 40px 0 ;
-    font-size: 15px;
-    color: #727272;
+.modal button {
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
 }

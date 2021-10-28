@@ -103,7 +103,7 @@ h1 {
   z-index: 10;
   background-color: white;
   width: 500px;
-  max-width: 80%;
+  max-width: 60%;
   height: 200px;
   transition: 200ms ease-in;
 }

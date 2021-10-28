@@ -2,18 +2,29 @@
 
 const chordArray = ['A','B','C','D','E','F','G'];
 let minor = false;
-
-const changeCurChord = function(newChord = 'C') {
-    //Switch between minor and major
+const getRandomChord = function() {
+    const note = chordArray[Math.trunc(Math.random() * chordArray.length)];
+    const species = minor?'m':'';
     minor = !minor;
-    if (minor) newChord = newChord + 'm';
-    //Display new chord
-    document.querySelector('.current .chord').textContent = newChord;
+    return note+species;
 };
+let current = getRandomChord();
+let next    = getRandomChord();
+const currElement = document.querySelector('.current .chord');
+const nextElement = document.querySelector('.next .chord');
+const changeTextContent = function(chord, element) {
+    element.textContent = chord;
+};
+changeTextContent(current, currElement);
+changeTextContent(next, nextElement);
+
 
 
 const timer = setInterval(function() {
-    changeCurChord(chordArray[Math.trunc(Math.random() * chordArray.length)])
+    changeTextContent(next, currElement);
+    current = next;
+    next = getRandomChord();
+    changeTextContent(next, nextElement);
 }, 2000);
 
 
@@ -36,6 +47,11 @@ openModal.addEventListener('click', function(){
 });
 
 closeModal.addEventListener('click', function(){
+    modal.classList.add('hidden')
+    overlay.classList.add('hidden')
+});
+
+overlay.addEventListener('click', function(){
     modal.classList.add('hidden')
     overlay.classList.add('hidden')
 });

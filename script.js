@@ -19,3 +19,23 @@ const timer = setInterval(function() {
 
 // let stop = false;
 // if (stop) clearInterval(timer);
+
+
+  /////////////////////////////
+ /// Modal window (Setup) ////
+/////////////////////////////
+
+const openModal = document.querySelector('.open-modal')
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const closeModal = document.querySelector('.close-modal');
+
+openModal.addEventListener('click', function(){
+    modal.classList.remove('hidden')
+    overlay.classList.remove('hidden')
+});
+
+closeModal.addEventListener('click', function(){
+    modal.classList.add('hidden')
+    overlay.classList.add('hidden')
+});

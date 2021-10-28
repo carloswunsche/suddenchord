@@ -33,7 +33,7 @@ h1 {
   position: relative;
 }
 
-button {
+.open-modal {
   padding: 5px;
   margin: 0 20px;
   text-align: left;
@@ -59,9 +59,8 @@ button {
 
 .next {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
-  padding-right: 90px;
 }
 
 .next span{
@@ -100,8 +99,52 @@ button {
   transition: 200ms ease-in-out;
   border: 1px solid black;
   border-radius: 10px;
+  box-shadow: 3px 3px 12px #424242;
   z-index: 10;
   background-color: white;
   width: 500px;
   max-width: 80%;
+  height: 200px;
+  transition: 200ms ease-in;
 }
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header .title {
+  font-size: 20px;
+}
+
+.modal-header .close-modal {
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background:none;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+  pointer-events: all;
+  opacity: 1;
+  transition: 200ms ease-in;
+}
+
+.hidden {
+  display: none;
+}
+

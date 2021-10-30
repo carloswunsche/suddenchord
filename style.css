@@ -1,9 +1,12 @@
+/* Rototo Regular 400 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 /* Global reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  user-select: none;
 }
   
 
@@ -12,6 +15,7 @@ html {
 }
   
 body {
+  font-family: 'Roboto', sans-serif;
   background: rgb(238,174,202);
   background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
   padding: 42px;
@@ -147,3 +151,11 @@ h1 {
   display: none;
 }
 
+#collection-name{
+  display: block;
+  margin-bottom: 10px;
+}
+
+#slider-collection {
+  width: 100%;
+}

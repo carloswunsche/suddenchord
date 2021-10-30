@@ -1,11 +1,10 @@
 "use strict";
 
-const chordArray = ['A','B','C','D','E','F','G'];
+let chordArray = ['A','B','C','D','E','F','G'];
 let minor = false;
 const getRandomChord = function() {
     const note = chordArray[Math.trunc(Math.random() * chordArray.length)];
     const species = minor?'m':'';
-    minor = !minor;
     return note+species;
 };
 let current = getRandomChord();
@@ -19,17 +18,16 @@ changeTextContent(current, currElement);
 changeTextContent(next, nextElement);
 
 
+  //////////////
+ /// Timer ////
+//////////////
 
 const timer = setInterval(function() {
     changeTextContent(next, currElement);
     current = next;
     next = getRandomChord();
     changeTextContent(next, nextElement);
-}, 2000);
-
-
-// let stop = false;
-// if (stop) clearInterval(timer);
+}, 3000);
 
 
   /////////////////////////////
@@ -47,11 +45,50 @@ openModal.addEventListener('click', function(){
 });
 
 closeModal.addEventListener('click', function(){
-    modal.classList.add('hidden')
-    overlay.classList.add('hidden')
+    addHiddenClass()
 });
 
 overlay.addEventListener('click', function(){
+    addHiddenClass()
+});
+
+function addHiddenClass() {
     modal.classList.add('hidden')
     overlay.classList.add('hidden')
+};
+
+
+  ///////////////////////////////////
+ /// Collection select (slider) ////
+///////////////////////////////////
+
+let collectionName = document.getElementById('collection-name');
+const collection = document.getElementById('slider-collection');
+collection.value = 1;
+
+collection.addEventListener('input', function(){
+    switch (collection.value) {
+        case '1': 
+            collectionName.textContent = 'Majors';
+            chordArray = ['A','B','C','D','E','F','G'];
+            minor = false;
+        break;
+        case '2': 
+            collectionName.textContent = 'Minors';
+            chordArray = ['A','B','C','D','E','F','G'];
+            minor = true;
+        break;
+        case '3': collectionName.textContent = 'C major';
+        chordArray = ['Am','Bdim','C','Dm','Em','F','G'];
+        minor = false;
+        break;
+        case '4': collectionName.textContent = 'G major';
+        chordArray = ['Am','Bm','C','D','Em','F#dim','G'];
+        minor = false;
+        break;
+        case '5': collectionName.textContent = 'D major';
+        chordArray = ['A','Bm','C#dim','D','Em','F#m','G'];
+        minor = false;
+        break;
+    }
 });

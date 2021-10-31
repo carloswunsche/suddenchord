@@ -2,32 +2,41 @@
 
 let chordArray = ['A','B','C','D','E','F','G'];
 let minor = false;
-const getRandomChord = function() {
+function getRandomChord() {
     const note = chordArray[Math.trunc(Math.random() * chordArray.length)];
     const species = minor?'m':'';
     return note+species;
 };
-let current = getRandomChord();
-let next    = getRandomChord();
+let current, next;
 const currElement = document.querySelector('.current .chord');
 const nextElement = document.querySelector('.next .chord');
-const changeTextContent = function(chord, element) {
+
+function changeTextContent(chord, element) {
     element.textContent = chord;
 };
-changeTextContent(current, currElement);
-changeTextContent(next, nextElement);
+
+function initialize() {
+    current = getRandomChord();
+    next    = getRandomChord();
+    changeTextContent(current, currElement);
+    changeTextContent(next, nextElement);
+}
+
 
 
   //////////////
  /// Timer ////
 //////////////
 
-const timer = setInterval(function() {
-    changeTextContent(next, currElement);
-    current = next;
-    next = getRandomChord();
-    changeTextContent(next, nextElement);
-}, 3000);
+let timer;
+function callTimer() {
+    timer = setInterval(function() {
+        changeTextContent(next, currElement);
+        current = next;
+        next = getRandomChord();
+        changeTextContent(next, nextElement);
+    }, 3000);
+};
 
 
   /////////////////////////////
@@ -91,4 +100,25 @@ collection.addEventListener('input', function(){
         minor = false;
         break;
     }
+});
+
+
+  ////////////////////////////
+ /// Start / Stop Button ////
+////////////////////////////
+
+let run = false;
+const startStopBtn = document.querySelector('.start-stop-btn');
+
+startStopBtn.addEventListener('click', function(){
+    run = !run;
+
+    if (run) {
+        callTimer();
+        initialize();
+        startStopBtn.textContent = 'Stop';
+    } else {
+        clearInterval(timer);
+        startStopBtn.textContent='Go!';
+    };
 });

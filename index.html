@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
     <script defer type="text/javascript" src="script.js"></script>
-    <title>SuddenChord App</title>
+    <title>SuddenChord App</title> 
   </head>
 
 
@@ -13,31 +13,45 @@
     <div class="main-container">
         <h1>SuddenChord App</h1>
 
-        <button class="open-modal" id="modal">Setup</button>
+        <button class="open-modal" id="modal">Settings</button>
 
         <!-- Setup Modal Window -->
 
         <div class="modal hidden">
           <div class="modal-header">
-            <h2 class="title">Chord collection</h2>
+            <h2 class="title">Settings</h2>
             <button class="close-modal">&times;</button>
           </div>
           <div class="modal-body">
-            <span id="collection-name">Majors</span>
-            <input type="range" min="1" max="5" step="1" id="slider-collection"/>
+            <div class="setting">
+             <span class="setting-title" id="collection-name">Collection: Majors</span>
+              <input type="range" min="1" max="5" step="1" id="slider-collection"/>
+            </div>
+            <div class="setting">
+              <span class="setting-title">Alterations</span>
+                <input type="radio" id="auto" name="alterations" value="auto" checked="true">
+                <label for="auto">Auto</label>
+                <input type="radio" id="flat" name="alterations" value="flat">
+                <label for="flat">Flat only (&#9837;)</label>
+                <input type="radio" id="sharp" name="alterations" value="sharp">
+                <label for="sharp">Sharp only (&#9839;)</label>
+            </div>
           </div>
         </div>
 
         <!-- Current Chord -->
         <div class="current">
-          <div class="chord">-</div>
+          <div class="chord"><span class="flat-sharp"></span></div>
         </div>
+        
         <!-- Next Chord -->
         <div class="next">
-          <span>Next:</span>
-          <div class="chord">-</div>
+          <span class="label">Press button to start</span>
+          <div class="chord"><span class="flat-sharp"></span></div>
         </div>
-        <div class="start-stop-btn">Go!</div>
+
+        <!-- Start/Stop button -->
+        <div class="start-stop-btn">Go</div>
 
         <!-- Footer -->
         <div class="footer">SuddenChord App &#169; 2021</div>

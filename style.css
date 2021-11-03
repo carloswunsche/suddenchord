@@ -49,13 +49,15 @@ h1 {
 
 .current {
   width: min-content;
+  display: flex;
+  align-items: center;
   margin: 10px auto;
   padding: 0;
+  height: 144px;
 }
 
 .chord {
   font-weight: bold;
-  width: min-content;
   background: -webkit-linear-gradient(rgb(127, 98, 255), #333);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -69,9 +71,10 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 58px;
 }
 
-.next span{
+.next .label{
   font-style: italic;
   font-size: 22px;
   padding-right: 10px;
@@ -79,6 +82,11 @@ h1 {
 
 .next .chord {
   font-size: 3rem;
+}
+
+.chord .flat-sharp {
+ font-size: 70%;
+ vertical-align: top;
 }
 
 .footer {
@@ -95,10 +103,6 @@ h1 {
 
 }
 
-.modal button {
-  cursor: pointer;
-}
-
 .modal {
   position: fixed;
   top: 50%;
@@ -110,7 +114,7 @@ h1 {
   z-index: 10;
   background-color: white;
   width: 500px;
-  max-width: 60%;
+  max-width: 70%;
   transition: 200ms ease-in;
 }
 
@@ -119,6 +123,10 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal-header button {
+  cursor: pointer;
 }
 
 .modal-header .title {
@@ -138,6 +146,19 @@ h1 {
   padding: 10px 15px;
 }
 
+.modal-body .setting {
+  margin-bottom: 10px;
+}
+
+.modal-body .setting-title {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.modal-body .setting label {
+  margin-right: 10px;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -152,11 +173,6 @@ h1 {
 
 .hidden {
   display: none;
-}
-
-#collection-name{
-  display: block;
-  margin-bottom: 10px;
 }
 
 #slider-collection {
@@ -181,3 +197,4 @@ cursor: pointer;
 .start-stop-btn:hover {
   background-color: #cbe3ff;
 }
+

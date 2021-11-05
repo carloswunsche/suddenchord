@@ -80,7 +80,7 @@ h1 {
 }
 
 .current .note, .current .type {font-size: 100%;}
-.current .flat-sharp           {font-size: 80%;}
+.current .flat-sharp           {font-size: 70%;}
 .next .note, .next .type       {font-size: 50%;}
 .next .flat-sharp              {font-size: 30%;}
 

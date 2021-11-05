@@ -1,18 +1,23 @@
-/* Rototo Regular 400 */
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/*                */
+/*  Global Reset  */
+/*                */
 
-/* Global reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   user-select: none;
 }
-  
 
-html {
-  height: 100%;
-}
+
+/*        */
+/*  Main  */
+/*        */
+
+/* Rototo Regular 400 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {height: 100%;}
   
 body {
   font-family: 'Roboto', sans-serif;
@@ -40,66 +45,55 @@ h1 {
   margin: auto;
 }
 
-.open-modal {
-  padding: 5px;
-  margin: 0 20px;
-  text-align: left;
-  cursor: pointer;
+
+/*          */
+/*  Chords  */
+/*          */
+
+.chord-container {
+  font-size: 120px;
 }
 
 .current {
-  width: min-content;
   display: flex;
+  justify-content: center;
   margin: 10px auto;
-  padding: 0;
-  height: 144px;
+}
+.next {
+  display: flex;
+  margin-left: 40%;
+  height: 60px;
+  width: min-content;
 }
 
-.chord {
+.note, .flat-sharp, .type {
   font-weight: bold;
   background: -webkit-linear-gradient(rgb(127, 98, 255), #333);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.current .chord {
-  font-size: 120px;
-}
-
-.chord .flat-sharp {
-  font-size: 70%;
-  vertical-align: top;
-  /* margin-left: -15px; */
- }
-
-.next {
-  display: flex;
-  align-items: center;
-  height: 58px;
-  margin-left: 40%;
-}
-
 .next .label{
   font-size: 22px;
   padding-right: 10px;
+  
 }
 
-.next .chord {
-  font-size: 3rem;
-}
+.current .note, .current .type {font-size: 100%;}
+.current .flat-sharp           {font-size: 80%;}
+.next .note, .next .type       {font-size: 50%;}
+.next .flat-sharp              {font-size: 30%;}
 
-.footer {
-  background-color: #cbe3ff;
-  height: 100px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  border-radius: 0 0 10px 10px;
-  text-align: center;
-  font-size: 15px;
-  color: #727272;
-  padding-top: 40px;
 
+/*         */
+/*  Modal  */
+/*         */
+
+.open-modal {
+  padding: 5px;
+  margin: 0 20px;
+  text-align: left;
+  cursor: pointer;
 }
 
 .modal {
@@ -174,9 +168,12 @@ h1 {
   display: none;
 }
 
-#slider-collection {
-  width: 100%;
-}
+#slider-collection {width: 100%;}
+
+
+/*              */
+/*  Start/Stop  */
+/*              */
 
 .start-stop-btn {
 width: 130px;
@@ -193,7 +190,22 @@ background-color: white;
 cursor: pointer;
 }
 
-.start-stop-btn:hover {
-  background-color: #cbe3ff;
-}
+.start-stop-btn:hover {background-color: #cbe3ff;}
 
+
+/*          */
+/*  Footer  */
+/*          */
+
+.footer {
+  background-color: #cbe3ff;
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+  font-size: 15px;
+  color: #727272;
+  padding-top: 40px;
+}

@@ -18,40 +18,27 @@ function takeChordFromBag() {
     return chord;
 };
 
-// Changes the content of divs (currElement and nextElement)
-function changeTextContent(note, div) {
-    div.textContent = ''; //Clear div (including span, didn't find other way)
-    div.insertAdjacentHTML('afterBegin',note[0]); //Insert note
-    div.insertAdjacentHTML('beforeEnd','<span class="flat-sharp"></span>'); //Insert span
-    let nodeList = document.querySelectorAll('.flat-sharp');     // Select .flat-sharps (nodelist)
-    
-    // Compare nodelist with div passed as a parameter to find the right child
-    let rightChild;
-    for (let i = 0; i < nodeList.length; i++) {
-        if (nodeList[i].parentNode === div) {
-            rightChild = nodeList[i]; 
-            break;
-        };
-    };
+// Changes the content of divs (currChord and nextChord)
+function changeTextContent(chord, note, flatSharp, type) {
+    //Clear all elements first
+    note.textContent = ''; flatSharp.textContent = ''; type.textContent = '';
 
-    // Remover solo la nota (ej: G) dejando la alteracion o especies si las hay
-    note = note.slice(1);
-    // Insert alteration if any into span
-    if (note[0] === 'b') {
-        rightChild.textContent = String.fromCharCode('0x266d');
-        // Nuevamente remover
-        note = note.slice(1);
-    }
-    if (note[0] === '#') {
-        rightChild.textContent = '#';
-        // Nuevamente remover
-        note = note.slice(1);
-    }
+    //Insert note
+    note.textContent = chord[0]; chord = chord.slice(1);
+
+    //Insert flat-sharp if any
+    if (chord[0] === 'b') {
+        flatSharp.textContent = String.fromCharCode('0x266d'); chord = chord.slice(1);
+    };
+    if (chord[0] === '#') {
+        flatSharp.textContent = '#'; chord = chord.slice(1);
+    };
     
-    // Si queda especie o algo al final, insertar
-    if (note.length > 0) div.insertAdjacentHTML('beforeEnd', note);
-    // Insert any other species at the end, if any
-    div.insertAdjacentHTML('beforeEnd', species);
+    //If the chord contains a type (species), insert it
+    if (chord.length > 0) type.textContent = chord;
+
+    //Also insert species variable if different than empty string
+    if (species !== '') type.insertAdjacentHTML('beforeEnd', species);
 };
 
 // Initialization
@@ -61,8 +48,8 @@ function init(string, arr1, arr2 = [], arr3 = []) {
     species = string;
     current = takeChordFromBag();
     next    = takeChordFromBag();
-    changeTextContent(current, currElement);
-    changeTextContent(next, nextElement);
+    changeTextContent(current, currNote, currFS, currType);
+    changeTextContent(next, nextNote, nextFS, nextType);
 };
 
 
@@ -71,9 +58,15 @@ function init(string, arr1, arr2 = [], arr3 = []) {
 ////////////////////
 
 // DOM elements and variables
-const currElement = document.querySelector('.current .chord');
-const nextElement = document.querySelector('.next .chord');
+const currNote = document.querySelector('.current .note');
+const currFS   = document.querySelector('.current .flat-sharp');
+const currType = document.querySelector('.current .type');
+
+const nextNote = document.querySelector('.next .note');
+const nextFS   = document.querySelector('.next .flat-sharp');
+const nextType = document.querySelector('.next .type');
 const nextLabel = document.querySelector('.next .label');
+
 const whiteKeys = ['A','B','C','D','E','F','G'];
 const blackKeysFlat = ['Ab','Bb','Db','Eb','Gb'];
 const blackKeysSharp = ['A#','C#','D#','F#','G#'];
@@ -94,8 +87,8 @@ function callTimer() {
 
         current = next;
         next = takeChordFromBag();
-        changeTextContent(current, currElement);
-        changeTextContent(next, nextElement);
+        changeTextContent(current, currNote, currFS, currType);
+        changeTextContent(next, nextNote, nextFS, nextType);
 
     }, 1000);
 };

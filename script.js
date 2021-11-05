@@ -34,10 +34,23 @@ function changeTextContent(note, div) {
         };
     };
 
+    // Remover solo la nota (ej: G) dejando la alteracion o especies si las hay
+    note = note.slice(1);
     // Insert alteration if any into span
-    if (note[1] === 'b') rightChild.textContent = String.fromCharCode('0x266d');
-    if (note[1] === '#') rightChild.textContent = '#';
-    // Insert species at the end, if any other than Major
+    if (note[0] === 'b') {
+        rightChild.textContent = String.fromCharCode('0x266d');
+        // Nuevamente remover
+        note = note.slice(1);
+    }
+    if (note[0] === '#') {
+        rightChild.textContent = '#';
+        // Nuevamente remover
+        note = note.slice(1);
+    }
+    
+    // Si queda especie o algo al final, insertar
+    if (note.length > 0) div.insertAdjacentHTML('beforeEnd', note);
+    // Insert any other species at the end, if any
     div.insertAdjacentHTML('beforeEnd', species);
 };
 

@@ -1,17 +1,8 @@
 "use strict";
 console.clear();
-///////////////////////////////////////////////////
-const whiteKeys = ['A','B','C','D','E','F','G'];
-const blackKeysFlat = ['Ab','Bb','Db','Eb','Gb'];
-const blackKeysSharp = ['A#','C#','D#','F#','G#'];
-let collection = setCollection(whiteKeys, blackKeysSharp);
-let bag = [...collection]; 
-let species = '';
-
-// Build the collection based on chosen sets
-function setCollection(set1, set2 = [], set3 = []) {
-    return [...set1, ...set2, ...set3];
-};
+  //////////////////
+ /// Functions ////
+//////////////////
 
 // Returns a random chord from the bag
 function takeChordFromBag() {
@@ -27,32 +18,57 @@ function takeChordFromBag() {
     return chord;
 };
 
+// Changes the content of divs (currElement and nextElement)
+function changeTextContent(note, div) {
+    div.textContent = ''; //Clear div (including span, didn't find other way)
+    div.insertAdjacentHTML('afterBegin',note[0]); //Insert note
+    div.insertAdjacentHTML('beforeEnd','<span class="flat-sharp"></span>'); //Insert span
+    let nodeList = document.querySelectorAll('.flat-sharp');     // Select .flat-sharps (nodelist)
+    
+    // Compare nodelist with div passed as a parameter to find the right child
+    let rightChild;
+    for (let i = 0; i < nodeList.length; i++) {
+        if (nodeList[i].parentNode === div) {
+            rightChild = nodeList[i]; 
+            break;
+        };
+    };
 
-
-  ///////////////////////////
- /// DOM Initialization ////
-///////////////////////////
-
-// DOM elements
-let current, next;
-const currElement = document.querySelector('.current .chord');
-const currElementSpan = document.querySelector('.current .chord .flat-sharp');
-const nextElement = document.querySelector('.next .chord');
-const nextElementSpan = document.querySelector('.next .chord .flat-sharp');
-const nextLabel = document.querySelector('.next .label');
-
-// Changes the content of currElement nextElement
-function changeTextContent(note, div, span) {
-    // Insert chord
-    div.insertAdjacentHTML('afterBegin',note[0]);
-    // Clear span
-    span.textContent = '';
-    // Insert alteration if any
-    if (note[1] === 'b') span.textContent = String.fromCharCode('0x266d');
-    if (note[1] === '#') span.textContent = '#';
+    // Insert alteration if any into span
+    if (note[1] === 'b') rightChild.textContent = String.fromCharCode('0x266d');
+    if (note[1] === '#') rightChild.textContent = '#';
     // Insert species at the end, if any other than Major
     div.insertAdjacentHTML('beforeEnd', species);
 };
+
+// Initialization
+function init(string, arr1, arr2 = [], arr3 = []) {
+    collection = [...arr1, ...arr2, ...arr3];
+    bag = [...collection];
+    species = string;
+    current = takeChordFromBag();
+    next    = takeChordFromBag();
+    changeTextContent(current, currElement);
+    changeTextContent(next, nextElement);
+};
+
+
+  ////////////////////
+ /// Starting up ////
+////////////////////
+
+// DOM elements and variables
+const currElement = document.querySelector('.current .chord');
+const nextElement = document.querySelector('.next .chord');
+const nextLabel = document.querySelector('.next .label');
+const whiteKeys = ['A','B','C','D','E','F','G'];
+const blackKeysFlat = ['Ab','Bb','Db','Eb','Gb'];
+const blackKeysSharp = ['A#','C#','D#','F#','G#'];
+let current, next, collection, bag, species;
+
+// Initialize!
+init('', whiteKeys, blackKeysFlat);
+
 
 
   //////////////
@@ -62,10 +78,12 @@ function changeTextContent(note, div, span) {
 let timer;
 function callTimer() {
     timer = setInterval(function() {
-        changeTextContent(current, currElement, currElementSpan);
+
         current = next;
         next = takeChordFromBag();
-        changeTextContent(next, nextElement, nextElementSpan);
+        changeTextContent(current, currElement);
+        changeTextContent(next, nextElement);
+
     }, 1000);
 };
 
@@ -91,7 +109,7 @@ overlay.addEventListener('click', function(){closeModal()});
 function closeModal() {
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
-    callTimer() ;
+    if (run) callTimer();
 };
 
 
@@ -100,42 +118,38 @@ function closeModal() {
  /// Collection select (slider) ////
 ///////////////////////////////////
 
-const collectionName = document.getElementById('collection-name');
-const selectedCollection = document.getElementById('slider-collection');
-selectedCollection.value = 2;
+const collectLabel = document.getElementById('collection-name');
+const collectSlider = document.getElementById('slider-collection');
+collectSlider.value = 1; 
 
-selectedCollection.addEventListener('input', function(){
-    switch (selectedCollection.value) {
+collectSlider.addEventListener('input', function(){
+    switch (collectSlider.value) {
         case '1': 
-            collectionName.textContent = 'Collection: Majors';
-            collection = setCollection(whiteKeys, blackKeys);
-            species = '';
+            collectLabel.textContent = 'Collection: Majors';
+            init('', whiteKeys, blackKeysFlat);
         break;
         case '2': 
-            collectionName.textContent = 'Collection: Minors';
-            collection = setCollection(whiteKeys, blackKeys);
-            species = 'm';
+            collectLabel.textContent = 'Collection: Minors';
+            init('m', whiteKeys, blackKeysSharp);
         break;
-        case '3': collectionName.textContent = 'Collection: C major';
-            collection = ['Am','Bdim','C','Dm','Em','F','G'];
-            species = '';
+        case '3': 
+            collectLabel.textContent = 'Collection: C major';
+            init('', ['Am','Bdim','C','Dm','Em','F','G']);
         break;
-        case '4': collectionName.textContent = 'Collection: G major';
-            collection = ['Am','Bm','C','D','Em','F#dim','G'];
-            species = '';
+        case '4': collectLabel.textContent = 'Collection: G major';
+            init('', ['Am','Bm','C','D','Em','F#dim','G']);
         break;
-        case '5': collectionName.textContent = 'Collection: D major';
-            collection = ['A','Bm','C#dim','D','Em','F#m','G'];
-            species = '';
+        case '5': collectLabel.textContent = 'Collection: D major';
+            init('', ['A','Bm','C#dim','D','Em','F#m','G']);
         break;
     }
 });
 
 
 
-  ///////////////////////////
- /// Alterations select ////
-///////////////////////////
+  ////////////////////////
+ /// Flat or Sharp ? ////
+////////////////////////
 
 // const alterations = document.getElementsByName('alterations');
 // // alterations[0].checked = true; // Esta linea es necesaria si uno no la puso en el HTML
@@ -156,19 +170,13 @@ selectedCollection.addEventListener('input', function(){
 
 let run = false;
 const startStopBtn = document.querySelector('.start-stop-btn');
-
 startStopBtn.addEventListener('click', function(){
     run = !run;
 
     if (run) {
+        callTimer();
         nextLabel.textContent = 'Next:';
         startStopBtn.textContent = 'Stop';
-
-        current = takeChordFromBag();
-        next    = takeChordFromBag();
-        changeTextContent(current, currElement, currElementSpan);
-        changeTextContent(next, nextElement, nextElementSpan);
-        callTimer();
     } else {
         clearInterval(timer);
         startStopBtn.textContent='Go!';

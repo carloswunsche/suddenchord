@@ -69,7 +69,7 @@ h1 {
 .chord .flat-sharp {
   font-size: 70%;
   vertical-align: top;
-  margin-left: -15px;
+  /* margin-left: -15px; */
  }
 
 .next {

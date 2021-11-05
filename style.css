@@ -50,7 +50,6 @@ h1 {
 .current {
   width: min-content;
   display: flex;
-  align-items: center;
   margin: 10px auto;
   padding: 0;
   height: 144px;
@@ -67,31 +66,26 @@ h1 {
   font-size: 120px;
 }
 
+.chord .flat-sharp {
+  font-size: 70%;
+  vertical-align: top;
+  margin-left: -15px;
+ }
+
 .next {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   height: 58px;
   margin-left: 40%;
 }
 
 .next .label{
-  font-style: italic;
   font-size: 22px;
   padding-right: 10px;
 }
 
-.curr {
-  
-}
-
 .next .chord {
   font-size: 3rem;
-}
-
-.chord .flat-sharp {
- font-size: 70%;
- vertical-align: top;
 }
 
 .footer {

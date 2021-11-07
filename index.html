@@ -15,8 +15,7 @@
 
         <button class="open-modal" id="modal">Settings</button>
 
-        <!-- Setup Modal Window -->
-
+        <!-- Settings Modal Window -->
         <div class="modal hidden">
           <div class="modal-header">
             <h2 class="title">Settings</h2>
@@ -25,16 +24,18 @@
           <div class="modal-body">
             <div class="setting">
              <span class="setting-title" id="collection-name">Collection: Majors</span>
-              <input type="range" min="1" max="5" step="1" id="slider-collection"/>
+              <input class="slider" type="range" min="1" max="5" step="1" id="slider-collection"/>
             </div>
             <div class="setting">
               <span class="setting-title">Alterations</span>
-                <input type="radio" id="auto" name="alterations" value="auto" checked="true">
-                <label for="auto">Auto</label>
-                <input type="radio" id="flat" name="alterations" value="flat">
+                <input type="radio" id="flat" name="alterations" value="flat" checked="true">
                 <label for="flat">Flat only (&#9837;)</label>
                 <input type="radio" id="sharp" name="alterations" value="sharp">
                 <label for="sharp">Sharp only (&#9839;)</label>
+            </div>
+            <div class="setting">
+              <span class="setting-title">Speed</span>
+              <input class="slider" type="range" min="23" max="280" step="1" id="slider-tempo"/>
             </div>
           </div>
         </div>

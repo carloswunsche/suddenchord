@@ -42,10 +42,9 @@ function changeTextContent(chord, note, flatSharp, type) {
 };
 
 // Initialization
-function init(string, arr1, arr2 = [], arr3 = []) {
+function init(arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
     collection = [...arr1, ...arr2, ...arr3];
     bag = [...collection];
-    species = string;
     current = takeChordFromBag();
     next    = takeChordFromBag();
     changeTextContent(current, currNote, currFS, currType);
@@ -70,10 +69,12 @@ const nextLabel = document.querySelector('.next .label');
 const whiteKeys = ['A','B','C','D','E','F','G'];
 const blackKeysFlat = ['Ab','Bb','Db','Eb','Gb'];
 const blackKeysSharp = ['A#','C#','D#','F#','G#'];
-let current, next, collection, bag, species;
+let blackKeys = [...blackKeysFlat];
+let current, next, collection, bag;
+let species = '';
 
 // Initialize!
-init('', whiteKeys, blackKeysFlat);
+init();
 
 
 
@@ -119,6 +120,28 @@ function closeModal() {
 };
 
 
+  ///////////////////////
+ // Flat or Sharp ? ////
+///////////////////////
+
+const alterations = document.getElementsByName('alterations');
+// alterations[0].checked = true; // Esta linea es necesaria si uno no la puso en el HTML
+for (const [i, val] of alterations.entries()) {
+    val.addEventListener('click', function(){
+        switch (val.value) {
+            case 'flat':  blackKeys = [...blackKeysFlat];  break;
+            case 'sharp': blackKeys = [...blackKeysSharp]; break;
+        };
+        init();
+    });
+};
+
+function enableAlts(boolean) {
+    for (let i=0; i<alterations.length;i++) {
+    alterations[i].disabled = !boolean;
+    };
+};
+
 
   ///////////////////////////////////
  /// Collection select (slider) ////
@@ -132,42 +155,34 @@ collectSlider.addEventListener('input', function(){
     switch (collectSlider.value) {
         case '1': 
             collectLabel.textContent = 'Collection: Majors';
-            init('', whiteKeys, blackKeysFlat);
+            enableAlts(true);
+            species = '';
+            init();
         break;
         case '2': 
             collectLabel.textContent = 'Collection: Minors';
-            init('m', whiteKeys, blackKeysSharp);
+            enableAlts(true);
+            species = 'm';
+            init();
         break;
         case '3': 
             collectLabel.textContent = 'Collection: C major';
-            init('', ['Am','Bdim','C','Dm','Em','F','G']);
+            enableAlts(false);
+            species = '';
+            init(['Am','Bdim','C','Dm','Em','F','G'], []);
         break;
         case '4': collectLabel.textContent = 'Collection: G major';
-            init('', ['Am','Bm','C','D','Em','F#dim','G']);
+            enableAlts(false);
+            species = '';
+            init(['Am','Bm','C','D','Em','F#dim','G'], []);
         break;
         case '5': collectLabel.textContent = 'Collection: D major';
-            init('', ['A','Bm','C#dim','D','Em','F#m','G']);
+            enableAlts(false);
+            species = '';
+            init(['A','Bm','C#dim','D','Em','F#m','G'], []);
         break;
     }
 });
-
-
-
-  ////////////////////////
- /// Flat or Sharp ? ////
-////////////////////////
-
-// const alterations = document.getElementsByName('alterations');
-// // alterations[0].checked = true; // Esta linea es necesaria si uno no la puso en el HTML
-// for (const [i, val] of alterations.entries()) {
-//     val.addEventListener('click', function(){
-//         switch (val.value) {
-//             case 'flat':  collection = setCollection(whiteKeys, blackKeysFlat);
-//             case 'sharp': collection = setCollection(whiteKeys, blackKeysSharp);
-//         };
-//         bag = [...collection]; 
-//     });
-// };
 
 
   ////////////////////////////

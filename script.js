@@ -114,7 +114,7 @@ const metronome = new Timer(
     60000 / bpm,
     {immediate: true}
 );
-// metronome.start();
+metronome.start();
 
 
   ////////////////////////////////

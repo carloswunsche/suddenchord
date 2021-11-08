@@ -185,6 +185,18 @@ collectSlider.addEventListener('input', function(){
 });
 
 
+  //////////////
+ /// Tempo ////
+//////////////
+
+let bpm = 120;
+const tempoSlider = document.getElementById('slider-tempo');
+tempoSlider.value = bpm;
+tempoSlider.addEventListener('input', () => {
+    bpm = tempoSlider.value;
+});
+
+
   ////////////////////////////
  /// Start / Stop Button ////
 ////////////////////////////

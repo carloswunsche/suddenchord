@@ -41,7 +41,7 @@ h1 {
   box-shadow: 3px 3px 12px #424242;
   position: relative;
   max-width: 800px;
-  min-height: 650px;
+  min-height: 600px;
   margin: auto;
 }
 
@@ -168,7 +168,7 @@ h1 {
   display: none;
 }
 
-.setting input {width: 100%;}
+.setting .slider {width: 100%;}
 
 
 /*              */

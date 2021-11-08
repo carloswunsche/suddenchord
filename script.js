@@ -1,5 +1,7 @@
 "use strict";
 console.clear();
+import Timer from './timer.js';
+
   //////////////////
  /// Functions ////
 //////////////////
@@ -94,6 +96,26 @@ function callTimer() {
     }, 1000);
 };
 
+  //////////////////////////////
+ /// New timer (metronome) ////
+//////////////////////////////
+
+let bpm = 90
+const tempoSlider = document.getElementById('slider-tempo');
+tempoSlider.value = bpm;
+tempoSlider.addEventListener('input', () => {
+    bpm = tempoSlider.value;
+});
+
+const click1 = new Howl({src: ['click.ogg']});
+
+const metronome = new Timer(
+    () => {click1.play()},
+    60000 / bpm,
+    {immediate: true}
+);
+// metronome.start();
+
 
   ////////////////////////////////
  /// Modal window (Settings) ////
@@ -182,18 +204,6 @@ collectSlider.addEventListener('input', function(){
             init(['A','Bm','C#dim','D','Em','F#m','G'], []);
         break;
     }
-});
-
-
-  //////////////
- /// Tempo ////
-//////////////
-
-let bpm = 120;
-const tempoSlider = document.getElementById('slider-tempo');
-tempoSlider.value = bpm;
-tempoSlider.addEventListener('input', () => {
-    bpm = tempoSlider.value;
 });
 
 

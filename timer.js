@@ -1,40 +1,42 @@
-// Timer module
-function Timer(callback, timeInterval, options) {
-    this.timeInterval = timeInterval;
+  /////////////////////
+ /// Timer module ////
+/////////////////////
 
+function Timer(callback, timeInterval = 120) {
+    this.timeInterval = 60000 / timeInterval;
+
+    // Start method
     this.start = () => {
         console.log('Timer started');
         // Set expected time. The moment in time we start plus whatever the time interval is
-        this.expected = Date.now() + this.timeInterval;
+        this.expected = performance.now() + this.timeInterval;
         // Start the timeout and save the ID in a property, so we can cancel it later
         this.timeout = null;
-
-        if (options.immediate) {
-            callback();
-        }
-
+        // Execute the callback function
+        callback();
+        // Re watch the tutorial to understand this xD
         this.timeout = setTimeout(this.round, this.timeInterval);
     };
 
+    // Stop method
     this.stop = () => {
         console.log('Timer stopped');
         clearTimeout(this.timeout);
     };
 
-    // Method that takes care of running our callback and adjusting the time interval
+    // Method that takes care of running the callback function and adjusting the time interval
     this.round = () => {
-        let drift = Date.now() - this.expected;
-        //Check if drift is greater than timeInterval and run errorCallback (if exists)
-        if (drift > this.timeInterval) {
-            if (options.errorCallback) {
-                errorCallback();
-            };
-        };
+        let drift = performance.now() - this.expected;
+        // //Check if drift is greater than timeInterval and run errorCallback (if exists)
+        // if (drift > this.timeInterval) {
+        //     if (options.errorCallback) {
+        //         errorCallback();
+        //     };
+        // };
         callback();
         this.expected += this.timeInterval;
         this.timeout = setTimeout(this.round, this.timeInterval - drift)
     };
-
 };
 
 export default Timer;

@@ -54,6 +54,7 @@ function init(arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
 };
 
 
+
   ////////////////////
  /// Starting up ////
 ////////////////////
@@ -75,52 +76,43 @@ let blackKeys = [...blackKeysFlat];
 let current, next, collection, bag;
 let species = '';
 
-// Initialize!
+// Initialize
 init();
 
 
 
-  //////////////
- /// Timer ////
-//////////////
+  /////////////////////////////////////
+ /// Metronome and call to action ////
+/////////////////////////////////////
 
-let timer;
-function callTimer() {
-    timer = setInterval(function() {
-
-        current = next;
-        next = takeChordFromBag();
-        changeTextContent(current, currNote, currFS, currType);
-        changeTextContent(next, nextNote, nextFS, nextType);
-
-    }, 1000);
+function action() {
+    click1.play()
+    current = next;
+    next = takeChordFromBag();
+    changeTextContent(current, currNote, currFS, currType);
+    changeTextContent(next, nextNote, nextFS, nextType);
 };
-
-  //////////////////////////////
- /// New timer (metronome) ////
-//////////////////////////////
 
 let bpm = 90
 const tempoSlider = document.getElementById('slider-tempo');
+const tempoLabel = document.getElementById('speed-bpm');
 tempoSlider.value = bpm;
+tempoLabel.textContent = `Speed: ${bpm} bpm`;
 tempoSlider.addEventListener('input', () => {
     bpm = tempoSlider.value;
+    metronome.timeInterval = 60000 / bpm;
+    tempoLabel.textContent = `Speed: ${bpm} bpm`;
 });
-
 const click1 = new Howl({src: ['click.ogg']});
+const metronome = new Timer( () => { action(); }, bpm);
 
-const metronome = new Timer(
-    () => {click1.play()},
-    60000 / bpm,
-    {immediate: true}
-);
-metronome.start();
 
 
   ////////////////////////////////
  /// Modal window (Settings) ////
 ////////////////////////////////
 
+let modalIsOpen = false;
 const openModalBtn = document.querySelector('.open-modal')
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -129,7 +121,7 @@ const closeModalBtn = document.querySelector('.close-modal');
 openModalBtn.addEventListener('click', function(){
     modal.classList.remove('hidden')
     overlay.classList.remove('hidden')
-    clearInterval(timer);
+    modalIsOpen = true;
 });
 
 closeModalBtn.addEventListener('click', function(){closeModal()});
@@ -138,8 +130,9 @@ overlay.addEventListener('click', function(){closeModal()});
 function closeModal() {
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
-    if (run) callTimer();
+    modalIsOpen = false;
 };
+
 
 
   ///////////////////////
@@ -163,6 +156,7 @@ function enableAlts(boolean) {
     alterations[i].disabled = !boolean;
     };
 };
+
 
 
   ///////////////////////////////////
@@ -207,6 +201,7 @@ collectSlider.addEventListener('input', function(){
 });
 
 
+
   ////////////////////////////
  /// Start / Stop Button ////
 ////////////////////////////
@@ -215,13 +210,35 @@ let run = false;
 const startStopBtn = document.querySelector('.start-stop-btn');
 startStopBtn.addEventListener('click', function(){
     run = !run;
+    runSwitch()
+});
 
+function runSwitch() {
     if (run) {
-        callTimer();
+        metronome.start();
         nextLabel.textContent = 'Next:';
         startStopBtn.textContent = 'Stop';
     } else {
-        clearInterval(timer);
+        metronome.stop();
         startStopBtn.textContent='Go!';
     };
+};
+
+
+
+  /////////////////////////////////
+ /// Spacebar to Start / Stop ////
+/////////////////////////////////
+
+let spaceReleased = true;
+window.addEventListener('keydown', key => {
+    if (spaceReleased && key.code === 'Space') {
+        run = !run;
+        runSwitch();
+        spaceReleased = false;
+    };
+});
+
+window.addEventListener('keyup', key => { 
+    if (key.code === 'Space') spaceReleased = true;
 });

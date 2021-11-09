@@ -124,6 +124,7 @@ h1 {
 
 .modal-header .title {
   font-size: 20px;
+  color: rgb(64, 15, 155);
 }
 
 .modal-header .close-modal {
@@ -146,6 +147,7 @@ h1 {
 .modal-body .setting-title {
   margin-bottom: 10px;
   display: block;
+  color: rgb(64, 15, 155);
 }
 
 .modal-body .setting label {

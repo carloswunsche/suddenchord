@@ -85,8 +85,7 @@ init();
  /// Metronome and call to action ////
 /////////////////////////////////////
 
-function action() {
-    click1.play()
+function chordChange() {
     current = next;
     next = takeChordFromBag();
     changeTextContent(current, currNote, currFS, currType);
@@ -103,8 +102,8 @@ tempoSlider.addEventListener('input', () => {
     metronome.timeInterval = 60000 / bpm;
     tempoLabel.textContent = `Speed: ${bpm} bpm`;
 });
-const click1 = new Howl({src: ['click.ogg']});
-const metronome = new Timer( () => { action(); }, bpm);
+
+const metronome = new Timer(chordChange, bpm, 4);
 
 
 

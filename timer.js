@@ -2,7 +2,9 @@
  /// Timer module ////
 /////////////////////
 
-function Timer(callback, timeInterval = 120) {
+function Timer(callback, timeInterval = 120, beatsPerMeasure) {
+    this.click1 = new Howl({src: ['click01.ogg']});
+    this.click2 = new Howl({src: ['click02.ogg']});
     this.timeInterval = 60000 / timeInterval;
 
     // Start method
@@ -14,6 +16,7 @@ function Timer(callback, timeInterval = 120) {
         this.timeout = null;
         // Execute the callback function
         callback();
+        this.click1.play()
         // Re watch the tutorial to understand this xD
         this.timeout = setTimeout(this.round, this.timeInterval);
     };
@@ -34,6 +37,7 @@ function Timer(callback, timeInterval = 120) {
         //     };
         // };
         callback();
+        this.click1.play()
         this.expected += this.timeInterval;
         this.timeout = setTimeout(this.round, this.timeInterval - drift)
     };

@@ -8,10 +8,10 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure) {
     this.timeInterval = 60000 / timeInterval;
     this.beatsPerMeasure = beatsPerMeasure;
     this.counter = 1;
+    this.stopFlag = false;
 
     // Start method
     this.start = () => {
-        console.log('Timer started');
         // Set expected time. The moment in time we start plus whatever the time interval is
         this.expected = performance.now() + this.timeInterval;
         // Start the timeout and save the ID in a property, so we can cancel it later
@@ -24,8 +24,9 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure) {
 
     // Stop method
     this.stop = () => {
-        console.log('Timer stopped');
         clearTimeout(this.timeout);
+        this.counter = 1;
+        this.stopFlag = true;
     };
 
     // Method that takes care of running the callback function and adjusting the time interval
@@ -46,14 +47,19 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure) {
     this.callbackAndClick = () => {
         // Callback if beat 1
         if (this.counter === 1) {
-            callback();
+            // New chord only if stopFlag is false
+            if (!this.stopFlag) callback();
             this.click1.play()
         };
         // If not, just play click2
-        if (this.counter !== 1) this.click2.play()
+        if (this.counter !== 1) {
+            this.click2.play()
+            //Reset stopFlag
+            this.stopFlag = false;
+        };
         //Advance counter and reset if === beatsPerMeasure
         this.counter++
-        if (this.counter === this.beatsPerMeasure + 1) this.counter = 1;
+        if (this.counter >= this.beatsPerMeasure + 1) this.counter = 1;
     };
 };
 

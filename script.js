@@ -1,5 +1,5 @@
 "use strict";
-console.clear();
+// console.clear();
 import Timer from './timer.js';
 
   //////////////////
@@ -102,8 +102,8 @@ tempoSlider.addEventListener('input', () => {
     metronome.timeInterval = 60000 / bpm;
     tempoLabel.textContent = `Speed: ${bpm} bpm`;
 });
-
-const metronome = new Timer(chordChange, bpm, 4);
+let beatsPerMeasure = 4;
+const metronome = new Timer(chordChange, bpm, beatsPerMeasure);
 
 
 
@@ -197,6 +197,24 @@ collectSlider.addEventListener('input', function(){
             init(['A','Bm','C#dim','D','Em','F#m','G'], []);
         break;
     }
+});
+
+
+
+  ///////////////////////////////////
+ /// Beats per measure (slider) ////
+///////////////////////////////////
+
+const measureLabel = document.getElementById('beats-measure');
+const measureSlider = document.getElementById('slider-beats');
+measureSlider.value = beatsPerMeasure;
+measureLabel.textContent = `Beats per measure: ${beatsPerMeasure}`
+
+measureSlider.addEventListener('input', function(){
+    measureLabel.textContent = `Beats per measure: ${measureSlider.value}`
+    beatsPerMeasure = parseInt(measureSlider.value);
+    metronome.beatsPerMeasure = beatsPerMeasure;
+    
 });
 
 

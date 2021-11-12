@@ -4,68 +4,83 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
-    <title>SuddenChord App</title> 
+    <title>SuddenChord</title> 
   </head>
 
 
   <body>
     <div class="main-container">
-        <h1>SuddenChord App</h1>
-
+      
+      <!-- Header -->
+      <div class="header">
+        <h1>Suddenchord</h1>
         <button class="open-modal" id="modal">Settings</button>
+      </div>
 
-        <!-- Settings Modal Window -->
-        <div class="modal hidden">
-          <div class="modal-header">
-            <h2 class="title">Settings</h2>
-            <button class="close-modal">&times;</button>
+      <!-- Settings Modal Window -->
+      <div class="modal hidden">
+        <div class="modal-header">
+          <h2 class="title">Settings</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting">
+            <span class="setting-title" id="collection-name">Collection: Majors</span>
+            <input class="slider" type="range" min="1" max="5" step="1" id="slider-collection"/>
           </div>
-          <div class="modal-body">
-            <div class="setting">
-             <span class="setting-title" id="collection-name">Collection: Majors</span>
-              <input class="slider" type="range" min="1" max="5" step="1" id="slider-collection"/>
-            </div>
-            <div class="setting">
-              <span class="setting-title">Alterations</span>
-                <input type="radio" id="flat" name="alterations" value="flat" checked="true">
-                <label for="flat">Flat only (&#9837;)</label>
-                <input type="radio" id="sharp" name="alterations" value="sharp">
-                <label for="sharp">Sharp only (&#9839;)</label>
-            </div>
-            <div class="setting">
-              <span class="setting-title" id="speed-bpm">Speed: </span>
-              <input class="slider" type="range" min="20" max="280" step="1" id="slider-tempo"/>
-            </div>
-            <div class="setting">
-              <span class="setting-title" id="beats-measure">Beats per measure: </span>
-              <input class="slider" type="range" min="1" max="8" step="1" id="slider-beats"/>
-            </div>
+          <div class="setting">
+            <span class="setting-title">Alterations</span>
+              <input type="radio" id="flat" name="alterations" value="flat" checked="true">
+              <label for="flat">Flat only (&#9837;)</label>
+              <input type="radio" id="sharp" name="alterations" value="sharp">
+              <label for="sharp">Sharp only (&#9839;)</label>
+          </div>
+          <div class="setting">
+            <span class="setting-title" id="speed-bpm">Speed: </span>
+            <input class="slider" type="range" min="20" max="280" step="1" id="slider-tempo"/>
+          </div>
+          <div class="setting">
+            <span class="setting-title" id="beats-measure">Beats per measure: </span>
+            <input class="slider" type="range" min="1" max="8" step="1" id="slider-beats"/>
           </div>
         </div>
+      </div>
 
-        <!-- Current Chord -->
-        <div class="chord-container">
-          <div class="current">
-              <div class="note">X</div>
-              <div class="flat-sharp">y</div>
-              <div class="type">z</div>
-          </div>
-          
-          <!-- Next Chord -->
-          <div class="next">
-            <div class="label">Next:</div>
+      <!-- Current Chord -->
+      <div class="chord-container">
+        <div class="current">
             <div class="note">X</div>
             <div class="flat-sharp">y</div>
             <div class="type">z</div>
-          </div>
         </div>
+        
+        <!-- Next Chord -->
+        <div class="next">
+          <div class="label">Next:</div>
+          <div class="note">X</div>
+          <div class="flat-sharp">y</div>
+          <div class="type">z</div>
+        </div>
+      </div>
 
-        <!-- Start/Stop button -->
-        <div class="start-stop-btn">Go</div>
+      <!-- Visual metronome -->
+      <div class="metronome">
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+        <div class="beat"></div>
+      </div>
 
-        <!-- Footer -->
-        <div class="footer">SuddenChord App &#169; 2021</div>
-        <div class="overlay hidden"></div>
+      <!-- Start/Stop button -->
+      <div class="start-stop-btn">Go</div>
+
+      <!-- Footer -->
+      <div class="footer">SuddenChord App &#169; 2021</div>
+      <div class="overlay hidden"></div>
     </div>
     <script src="howler.min.js"></script>
     <script type="module" src="script.js"></script>

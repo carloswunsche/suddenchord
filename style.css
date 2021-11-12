@@ -128,8 +128,8 @@ h1 {
   box-shadow: 3px 3px 12px #424242;
   z-index: 10;
   background-color: white;
-  width: 550px;
-  max-width: 70%;
+  width: 500px;
+  max-width: 75%;
 }
 
 .modal-header {

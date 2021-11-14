@@ -92,6 +92,21 @@ function chordChange() {
     changeTextContent(next, nextNote, nextFS, nextType);
 };
 
+// Visual metronome variables
+const visualBeat = document.querySelector('.beat');
+const visualMetronome = document.querySelector('.metronome');
+
+
+function drawVisualMetronome(beatsPerMeasure) {
+    // Clean content first
+    visualMetronome.textContent = '';
+    // Insert beats
+    for (let i=0; i < beatsPerMeasure; i++) {
+        visualMetronome.insertAdjacentHTML('beforeEnd', visualBeat.outerHTML);
+    };
+    if (beatsPerMeasure === 1) visualMetronome.textContent = '';
+};
+
 let bpm = 90
 const tempoSlider = document.getElementById('slider-tempo');
 const tempoLabel = document.getElementById('speed-bpm');
@@ -103,9 +118,8 @@ tempoSlider.addEventListener('input', () => {
     tempoLabel.textContent = `Speed: ${bpm} bpm`;
 });
 let beatsPerMeasure = 4;
-const metronome = new Timer(chordChange, bpm, beatsPerMeasure);
-
-
+drawVisualMetronome(beatsPerMeasure);
+const metronome = new Timer(chordChange, bpm, beatsPerMeasure, visualMetronome);
 
   ////////////////////////////////
  /// Modal window (Settings) ////
@@ -213,7 +227,10 @@ measureLabel.textContent = `Beats per measure: ${beatsPerMeasure}`
 measureSlider.addEventListener('input', function(){
     measureLabel.textContent = `Beats per measure: ${measureSlider.value}`
     beatsPerMeasure = parseInt(measureSlider.value);
+    drawVisualMetronome(beatsPerMeasure);
+    // Update values used in timer.js (the metronome)
     metronome.beatsPerMeasure = beatsPerMeasure;
+    metronome.visualMetronome = visualMetronome;
     
 });
 

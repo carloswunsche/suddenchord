@@ -204,6 +204,7 @@ h1 {
   width: 50%;
   margin: auto;
   justify-content: center;
+  height: 15px;
 }
 
 .beat {
@@ -215,7 +216,7 @@ h1 {
   border: solid 1px rgb(71, 71, 71);
 }
 
-.beat .active {
+.tint {
   background-color: rgb(142, 117, 255);
 }
 

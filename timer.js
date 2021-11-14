@@ -8,6 +8,7 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure, vMetronome) {
     this.timeInterval = 60000 / timeInterval;
     this.beatsPerMeasure = beatsPerMeasure;
     this.vMetronome = vMetronome;
+    this.vBeats     = vMetronome.querySelectorAll('.beat');
     this.counter = 1;
     this.stopFlag = false;
 
@@ -28,6 +29,7 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure, vMetronome) {
         clearTimeout(this.timeout);
         this.counter = 1;
         this.stopFlag = true;
+        this.tintClear();
     };
 
     // Method that takes care of running the callback function and adjusting the time interval
@@ -64,15 +66,21 @@ function Timer(callback, timeInterval = 120, beatsPerMeasure, vMetronome) {
         if (this.counter >= this.beatsPerMeasure + 1) this.counter = 1;
     };
 
+    this.tintClear = () => {
+        for (let i = 0; i < this.vBeats.length; i++) {
+            this.vBeats[i].classList.remove('tint');
+        };
+    };
+
     this.tintBeat = () => {
-        if (this.counter === 1) {
-            for (const [i, el] in vMetronome.childNodes) {
-                el.classList.remove('tint');
+        // Remove all tint first
+        this.tintClear();
+        // Then tint based up until the counter value, only if beatsPerMeasure is more than 1
+        if (this.beatsPerMeasure > 1 && this.counter <= this.vBeats.length) {
+            for (let i = 0; i < this.counter; i++) {
+                this.vBeats[i].classList.add('tint');
             };
         };
-
-        // console.log(vMetronome.childNodes[0]);
-        console.log(vMetronome.querySelectorAll('.beat'));
     };
 };
 

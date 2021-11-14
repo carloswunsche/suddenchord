@@ -228,10 +228,10 @@ measureSlider.addEventListener('input', function(){
     measureLabel.textContent = `Beats per measure: ${measureSlider.value}`
     beatsPerMeasure = parseInt(measureSlider.value);
     drawVisualMetronome(beatsPerMeasure);
-    // Update values used in timer.js (the metronome)
+    // Update values used in timer.js
     metronome.beatsPerMeasure = beatsPerMeasure;
-    metronome.visualMetronome = visualMetronome;
-    
+    metronome.vMetronome      = visualMetronome;
+    metronome.vBeats          = visualMetronome.querySelectorAll('.beat');
 });
 
 

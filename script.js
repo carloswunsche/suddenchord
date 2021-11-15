@@ -1,6 +1,5 @@
 "use strict";
-// console.clear();
-import Timer from './timer.js';
+import Metronome from './metronome.js';
 
   //////////////////
  /// Functions ////
@@ -119,7 +118,7 @@ tempoSlider.addEventListener('input', () => {
 });
 let beatsPerMeasure = 4;
 drawVisualMetronome(beatsPerMeasure);
-const metronome = new Timer(chordChange, bpm, beatsPerMeasure, visualMetronome);
+const metronome = new Metronome(chordChange, bpm, beatsPerMeasure, visualMetronome);
 
   ////////////////////////////////
  /// Modal window (Settings) ////

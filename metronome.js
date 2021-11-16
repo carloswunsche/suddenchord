@@ -23,7 +23,7 @@ function Metronome(updateChords, timeInterval, beatsPerMeasure, vMetronome) {
         // the Stop method will take care of resetting the counter.
         this.stopFlag = false; // Set stopFlag to false
         // Execute the callback function
-        this.updateMetronome();
+        this.updateMetronome(false);
         // Re watch the tutorial to understand this xD
         this.timeout = setTimeout(this.round, this.timeInterval);
     };
@@ -50,11 +50,11 @@ function Metronome(updateChords, timeInterval, beatsPerMeasure, vMetronome) {
 
 
 
-    this.updateMetronome = () => {
+    this.updateMetronome = (boolean = true) => {
         this.tintBeat();
         // Click1 and update chords if first beat and stopFlag is False
         if (this.counter === 1 && !this.stopFlag) {
-            updateChords();
+            if (boolean) updateChords();
             this.click1.play();
         } else {
             this.click2.play()     // If not, just play Click2

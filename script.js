@@ -77,7 +77,7 @@ let current, next, collection, bag;
 let species = '';
 
 // Initialize
-init();
+init(whiteKeys, blackKeys);
 
 
 
@@ -156,16 +156,47 @@ const alterations = document.getElementsByName('alterations');
 // alterations[0].checked = true; // Esta linea es necesaria si uno no la puso en el HTML
 for (const [i, val] of alterations.entries()) {
     val.addEventListener('click', function(){
+        let prevBlackKeys;
         switch (val.value) {
-            case 'flat':  blackKeys = [...blackKeysFlat];  break;
-            case 'sharp': blackKeys = [...blackKeysSharp]; break;
+            case 'flat':  
+                blackKeys = [...blackKeysFlat];
+                prevBlackKeys = [...blackKeysSharp];  
+                break;
+            case 'sharp': 
+                blackKeys = [...blackKeysSharp]; 
+                prevBlackKeys = [...blackKeysFlat];
+                break;
         };
-        init();
+        console.log(prevBlackKeys)
+        console.log(blackKeys)
+        changeAlts(prevBlackKeys, whiteKeys, blackKeys);
     });
 };
 
+function changeAlts(prevArr, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
+    // Update collection for future bag refilling
+    collection = [...arr1, ...arr2, ...arr3];
+
+    // Update bag replacing previous alts with new ones
+    for (const [i1, el1] of bag.entries()) {
+        for (const [i2, el2] of prevArr.entries()) {
+            if (el1 === el2) bag[i1] = blackKeys[i2];
+        };
+    };
+
+    // Update current and next
+    for (const [i, el] of prevArr.entries()) {
+        if (current === el) current = blackKeys[i];
+        if (next    === el) next    = blackKeys[i];
+    };
+
+    // Update the chords on screen
+    changeDivContent(current, currNote, currFS, currType);
+    changeDivContent(next, nextNote, nextFS, nextType);
+};
+
 function enableAlts(boolean) {
-    for (let i=0; i<alterations.length;i++) {
+    for (let i=0; i<alterations.length; i++) {
     alterations[i].disabled = !boolean;
     };
 };

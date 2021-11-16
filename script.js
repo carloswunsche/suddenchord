@@ -6,21 +6,21 @@ import Metronome from './metronome.js';
 //////////////////
 
 // Returns a random chord from the bag
-function takeChordFromBag() {
+function takeNoteFromBag() {
     // Get a random index from bag
     const index = Math.trunc(Math.random() * bag.length);
-    // Chosen chord into variable before deleting it from bag
-    const chord = bag[index];
-    // Remove chord from bag
+    // Chosen note into variable before deleting it from bag
+    const note = bag[index];
+    // Remove note from bag
     bag.splice(index, 1);
     // Fill bag again if empty
     if (bag.length === 0) bag = [...collection];
-    // Return
-    return chord;
+    // Return note
+    return note;
 };
 
-// Changes the content of divs (currChord and nextChord)
-function changeTextContent(chord, note, flatSharp, type) {
+// Changes the content of divs currChord and nextChord
+function changeDivContent(chord, note, flatSharp, type) {
     //Clear all elements first
     note.textContent = ''; flatSharp.textContent = ''; type.textContent = '';
 
@@ -29,16 +29,18 @@ function changeTextContent(chord, note, flatSharp, type) {
 
     //Insert flat-sharp if any
     if (chord[0] === 'b') {
-        flatSharp.textContent = String.fromCharCode('0x266d'); chord = chord.slice(1);
+        flatSharp.textContent = String.fromCharCode('0x266d'); 
+        chord = chord.slice(1);
     };
     if (chord[0] === '#') {
-        flatSharp.textContent = '#'; chord = chord.slice(1);
+        flatSharp.textContent = '#'; 
+        chord = chord.slice(1);
     };
     
     //If the chord contains a type (species), insert it
     if (chord.length > 0) type.textContent = chord;
 
-    //Also insert species variable if different than empty string
+    //Also insert species variable if different than the empty string
     if (species !== '') type.insertAdjacentHTML('beforeEnd', species);
 };
 
@@ -46,19 +48,18 @@ function changeTextContent(chord, note, flatSharp, type) {
 function init(arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
     collection = [...arr1, ...arr2, ...arr3];
     bag = [...collection];
-    current = takeChordFromBag();
-    next    = takeChordFromBag();
-    changeTextContent(current, currNote, currFS, currType);
-    changeTextContent(next, nextNote, nextFS, nextType);
+    current = takeNoteFromBag();
+    next    = takeNoteFromBag();
+    changeDivContent(current, currNote, currFS, currType);
+    changeDivContent(next, nextNote, nextFS, nextType);
 };
 
 
 
-  ////////////////////
- /// Starting up ////
-////////////////////
+  ////////////////////////////////////////
+ /// Gathering DOM elements and Init ////
+////////////////////////////////////////
 
-// DOM elements and variables
 const currNote = document.querySelector('.current .note');
 const currFS   = document.querySelector('.current .flat-sharp');
 const currType = document.querySelector('.current .type');
@@ -69,8 +70,8 @@ const nextType = document.querySelector('.next .type');
 const nextLabel = document.querySelector('.next .label');
 
 const whiteKeys = ['A','B','C','D','E','F','G'];
-const blackKeysFlat = ['Ab','Bb','Db','Eb','Gb'];
-const blackKeysSharp = ['A#','C#','D#','F#','G#'];
+const blackKeysFlat  = ['Ab','Bb','Db','Eb','Gb'];
+const blackKeysSharp = ['G#','A#','C#','D#','F#'];
 let blackKeys = [...blackKeysFlat];
 let current, next, collection, bag;
 let species = '';
@@ -80,15 +81,15 @@ init();
 
 
 
-  /////////////////////////////////////
- /// Metronome and call to action ////
-/////////////////////////////////////
+  //////////////////
+ /// Metronome ////
+//////////////////
 
-function chordChange() {
+function updateChords() {
     current = next;
-    next = takeChordFromBag();
-    changeTextContent(current, currNote, currFS, currType);
-    changeTextContent(next, nextNote, nextFS, nextType);
+    next = takeNoteFromBag();
+    changeDivContent(current, currNote, currFS, currType);
+    changeDivContent(next, nextNote, nextFS, nextType);
 };
 
 // Visual metronome variables
@@ -118,7 +119,7 @@ tempoSlider.addEventListener('input', () => {
 });
 let beatsPerMeasure = 4;
 drawVisualMetronome(beatsPerMeasure);
-const metronome = new Metronome(chordChange, bpm, beatsPerMeasure, visualMetronome);
+const metronome = new Metronome(updateChords, bpm, beatsPerMeasure, visualMetronome);
 
   ////////////////////////////////
  /// Modal window (Settings) ////

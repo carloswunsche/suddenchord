@@ -4,7 +4,10 @@
 
 function Metronome(updateChords, timeInterval, beatsPerMeasure, vMetronome) {
     this.click1 = new Howl({src: ['click01.ogg']});
+    this.click1.volume(1);
     this.click2 = new Howl({src: ['click02.ogg']});
+    this.click2.volume(1);
+    
     this.timeInterval = 60000 / timeInterval;
     this.beatsPerMeasure = beatsPerMeasure;
     this.vMetronome = vMetronome;

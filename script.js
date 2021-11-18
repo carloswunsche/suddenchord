@@ -116,6 +116,7 @@ tempoSlider.addEventListener('input', () => {
     bpm = tempoSlider.value;
     metronome.timeInterval = 60000 / bpm;
     tempoLabel.textContent = `Speed: ${bpm} bpm`;
+    setCookie('bpm', tempoSlider.value); // Save cookie
 });
 let beatsPerMeasure = 4;
 drawVisualMetronome(beatsPerMeasure);
@@ -160,15 +161,15 @@ for (const [i, val] of alterations.entries()) {
         switch (val.value) {
             case 'flat':  
                 blackKeys = [...blackKeysFlat];
-                prevBlackKeys = [...blackKeysSharp];  
+                prevBlackKeys = [...blackKeysSharp];
+                setCookie('alts', 1); // Save cookie
                 break;
             case 'sharp': 
                 blackKeys = [...blackKeysSharp]; 
                 prevBlackKeys = [...blackKeysFlat];
+                setCookie('alts', 2); // Save cookie
                 break;
         };
-        console.log(prevBlackKeys)
-        console.log(blackKeys)
         changeAlts(prevBlackKeys, whiteKeys, blackKeys);
     });
 };
@@ -242,6 +243,7 @@ collectSlider.addEventListener('input', function(){
             init(['A','Bm','C#dim','D','Em','F#m','G'], []);
         break;
     }
+    setCookie('collection', collectSlider.value); // Save cookie
 });
 
 
@@ -263,8 +265,22 @@ measureSlider.addEventListener('input', function(){
     metronome.beatsPerMeasure = beatsPerMeasure;
     metronome.vMetronome      = visualMetronome;
     metronome.vBeats          = visualMetronome.querySelectorAll('.beat');
+
+    setCookie('beatsPerMeasure', measureSlider.value); // Save cookie
 });
 
+
+
+  ////////////////////////
+ /// Volume (slider) ////
+////////////////////////
+const volSlider = document.getElementById('slider-vol');
+volSlider.value = 1;
+volSlider.addEventListener('input', function(){
+    metronome.click1.volume(volSlider.value);
+    metronome.click2.volume(volSlider.value);
+    setCookie('volume', volSlider.value); // Save cookie
+});
 
 
   ////////////////////////////
@@ -307,3 +323,39 @@ window.addEventListener('keydown', key => {
 window.addEventListener('keyup', key => { 
     if (key.code === 'Space') spaceReleased = true;
 });
+
+
+
+  ////////////////
+ /// Cookies ////
+////////////////
+
+let username = 'Max Brown';
+// Save a Cookie function
+function setCookie(cName, cValue, expDays = 30) {
+        let date = new Date();
+        date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        // document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+        // document.cookie = cName + "=" + cValue + "; " + expires; // No path
+        document.cookie = `${cName}=${cValue}; ${expires}` // No path and template literal
+}
+// setCookie('collection', 1);
+console.log(document.cookie)
+
+
+//Use this command to delete test cookies
+document.cookie = "nameOfcookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // Epoch time
+
+// Load a Cookie function
+function getCookie(cName) {
+    const name = cName + "=";
+    const cDecoded = decodeURIComponent(document.cookie); // to be careful
+    const cArr = cDecoded.split('; ');
+    let res; // Result
+    cArr.forEach(val => {
+        if (val.indexOf(name) === 0) res = val.substring(name.length);
+    })
+    return res;
+}
+// console.log(getCookie('collection'));

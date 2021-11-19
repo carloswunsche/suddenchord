@@ -354,11 +354,13 @@ window.addEventListener('keydown', key => {
         run = !run;
         runSwitch();
         spaceReleased = false;
+        document.body.style.overflow = "hidden"; // to prevent the spacebar from scrolling page
     };
 });
 
 window.addEventListener('keyup', key => { 
     if (key.code === 'Space') spaceReleased = true;
+    document.body.style.overflow = "auto"; // to prevent the spacebar from scrolling page
 });
 
 

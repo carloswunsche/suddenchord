@@ -28,6 +28,11 @@ body {
   height: 100%;
 }
 
+/* Prevent spacebar from scrolling */
+body::-webkit-scrollbar {display: none;} /* Chrome, Safari and Opera */
+body {-ms-overflow-style: none;}  /* IE and Edge */
+html {scrollbar-width: none;}  /* Firefox */
+
 .main-container {
   background: rgb(255,255,255);
   background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(237,237,237,1) 48%, rgba(255,255,255,1) 100%);

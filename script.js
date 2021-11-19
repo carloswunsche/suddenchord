@@ -67,7 +67,7 @@ const currType = document.querySelector('.current .type');
 const nextNote = document.querySelector('.next .note');
 const nextFS   = document.querySelector('.next .flat-sharp');
 const nextType = document.querySelector('.next .type');
-const nextLabel = document.querySelector('.next .label');
+const nextLabel= document.querySelector('.next .label');
 
 const whiteKeys = ['A','B','C','D','E','F','G'];
 const blackKeysFlat  = ['Ab','Bb','Db','Eb','Gb'];
@@ -96,7 +96,6 @@ function updateChords() {
 const visualBeat = document.querySelector('.beat');
 const visualMetronome = document.querySelector('.metronome');
 
-
 function drawVisualMetronome(beatsPerMeasure) {
     // Clean content first
     visualMetronome.textContent = '';
@@ -107,7 +106,14 @@ function drawVisualMetronome(beatsPerMeasure) {
     if (beatsPerMeasure === 1) visualMetronome.textContent = '';
 };
 
-let bpm = 90
+let bpm;
+// Load cookie if exists. If not load defaults
+if (getCookie('bpm') !== undefined) {
+    bpm = getCookie('bpm'); // this should be an integer, beware
+    // update bpm slider, label, and timer information here
+} else bpm = 100;
+
+
 const tempoSlider = document.getElementById('slider-tempo');
 const tempoLabel = document.getElementById('speed-bpm');
 tempoSlider.value = bpm;
@@ -121,6 +127,8 @@ tempoSlider.addEventListener('input', () => {
 let beatsPerMeasure = 4;
 drawVisualMetronome(beatsPerMeasure);
 const metronome = new Metronome(updateChords, bpm, beatsPerMeasure, visualMetronome);
+
+
 
   ////////////////////////////////
  /// Modal window (Settings) ////
@@ -149,28 +157,45 @@ function closeModal() {
 
 
 
-  ///////////////////////
- // Flat or Sharp ? ////
-///////////////////////
+  //////////////////////
+ /// Flat or Sharp? ///
+//////////////////////
 
-const alterations = document.getElementsByName('alterations');
-// alterations[0].checked = true; // Esta linea es necesaria si uno no la puso en el HTML
-for (const [i, val] of alterations.entries()) {
+const altsNodeList = document.getElementsByName('alterations');
+
+
+let alts;
+// Load cookie if exists. If not load defaults
+if (getCookie('alts') !== undefined) {
+    alts = getCookie('alts');
+} else {
+    alts = 'flat';
+};
+setAlts(alts);
+
+function setAlts(altValue) {
+    let prevBlackKeys;
+    switch (altValue) {
+        case 'flat':  
+            blackKeys = [...blackKeysFlat];
+            prevBlackKeys = [...blackKeysSharp];
+            altsNodeList[0].checked = true;
+            setCookie('alts', 'flat'); // Save cookie
+            break;
+        case 'sharp': 
+            blackKeys = [...blackKeysSharp]; 
+            prevBlackKeys = [...blackKeysFlat];
+            altsNodeList[1].checked = true;
+            setCookie('alts', 'sharp'); // Save cookie
+            break;
+    };
+    changeAlts(prevBlackKeys, whiteKeys, blackKeys);
+};
+
+
+for (const [i, val] of altsNodeList.entries()) {
     val.addEventListener('click', function(){
-        let prevBlackKeys;
-        switch (val.value) {
-            case 'flat':  
-                blackKeys = [...blackKeysFlat];
-                prevBlackKeys = [...blackKeysSharp];
-                setCookie('alts', 1); // Save cookie
-                break;
-            case 'sharp': 
-                blackKeys = [...blackKeysSharp]; 
-                prevBlackKeys = [...blackKeysFlat];
-                setCookie('alts', 2); // Save cookie
-                break;
-        };
-        changeAlts(prevBlackKeys, whiteKeys, blackKeys);
+        setAlts(val.value);
     });
 };
 
@@ -197,8 +222,8 @@ function changeAlts(prevArr, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
 };
 
 function enableAlts(boolean) {
-    for (let i=0; i<alterations.length; i++) {
-    alterations[i].disabled = !boolean;
+    for (let i=0; i<altsNodeList.length; i++) {
+    altsNodeList[i].disabled = !boolean;
     };
 };
 
@@ -208,12 +233,24 @@ function enableAlts(boolean) {
  /// Collection select (slider) ////
 ///////////////////////////////////
 
-const collectLabel = document.getElementById('collection-name');
+const collectLabel  = document.getElementById('collection-name');
 const collectSlider = document.getElementById('slider-collection');
-collectSlider.value = 1; 
 
+// Load cookie if exists. If not load defaults
+if (getCookie('collection') !== undefined) {
+    collectSlider.value = getCookie('collection');
+    collectSliderEvent(getCookie('collection'));
+} else collectSlider.value = 1;
+
+// Event listener for the slider
 collectSlider.addEventListener('input', function(){
-    switch (collectSlider.value) {
+    collectSliderEvent(collectSlider.value);
+    setCookie('collection', collectSlider.value); // Save cookie on slider input
+});
+
+// What to do in each selection of the slider
+function collectSliderEvent(inputValue) {
+    switch (inputValue) {
         case '1': 
             collectLabel.textContent = 'Collection: Majors';
             enableAlts(true);
@@ -242,9 +279,8 @@ collectSlider.addEventListener('input', function(){
             species = '';
             init(['A','Bm','C#dim','D','Em','F#m','G'], []);
         break;
-    }
-    setCookie('collection', collectSlider.value); // Save cookie
-});
+    };
+};
 
 
 
@@ -252,7 +288,7 @@ collectSlider.addEventListener('input', function(){
  /// Beats per measure (slider) ////
 ///////////////////////////////////
 
-const measureLabel = document.getElementById('beats-measure');
+const measureLabel  = document.getElementById('beats-measure');
 const measureSlider = document.getElementById('slider-beats');
 measureSlider.value = beatsPerMeasure;
 measureLabel.textContent = `Beats per measure: ${beatsPerMeasure}`
@@ -281,6 +317,7 @@ volSlider.addEventListener('input', function(){
     metronome.click2.volume(volSlider.value);
     setCookie('volume', volSlider.value); // Save cookie
 });
+
 
 
   ////////////////////////////
@@ -340,17 +377,15 @@ function setCookie(cName, cValue, expDays = 30) {
         // document.cookie = cName + "=" + cValue + "; " + expires; // No path
         document.cookie = `${cName}=${cValue}; ${expires}` // No path and template literal
 }
-// setCookie('collection', 1);
+
+// Use this command to delete test cookies
+// document.cookie = "bpm=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // Epoch time
 console.log(document.cookie)
-
-
-//Use this command to delete test cookies
-document.cookie = "nameOfcookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // Epoch time
 
 // Load a Cookie function
 function getCookie(cName) {
     const name = cName + "=";
-    const cDecoded = decodeURIComponent(document.cookie); // to be careful
+    const cDecoded = decodeURIComponent(document.cookie); // To be careful
     const cArr = cDecoded.split('; ');
     let res; // Result
     cArr.forEach(val => {
@@ -358,4 +393,4 @@ function getCookie(cName) {
     })
     return res;
 }
-// console.log(getCookie('collection'));
+// getCookie('collection'); // This is how you get a cookie

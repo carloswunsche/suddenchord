@@ -93,6 +93,7 @@ h1 {
   margin-left: 40%;
   height: 60px;
   width: min-content;
+  align-items: center;
 }
 
 .note, .flat-sharp, .type {
@@ -104,14 +105,25 @@ h1 {
 
 .next .label{
   font-size: 22px;
-  padding-right: 10px;
+  padding-right: 20px;
+  color: grey;
   
 }
 
 .current .note, .current .type {font-size: 100%;}
 .current .flat-sharp           {font-size: 70%;}
-.next .note, .next .type       {font-size: 50%;}
-.next .flat-sharp              {font-size: 30%;}
+.next .note, .next .type {
+  font-size: 50%;
+  background: -webkit-linear-gradient(#ababab, #898989);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.next .flat-sharp {
+  font-size: 30%;
+  background: -webkit-linear-gradient(#ababab, #898989);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 
 

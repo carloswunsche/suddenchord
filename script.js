@@ -212,7 +212,7 @@ function changeAlts(prevArr, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
 
     // Update current and next
     for (const [i, el] of prevArr.entries()) {
-        if (current === el) current = blackKeys[i];
+        if (current === el) current = blackKeys[i]; 
         if (next    === el) next    = blackKeys[i];
     };
 

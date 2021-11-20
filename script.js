@@ -109,7 +109,7 @@ function drawVisualMetronome(beatsPerMeasure) {
 let bpm;
 // Load cookie if exists. If not load defaults
 if (getCookie('bpm') !== undefined) {
-    bpm = getCookie('bpm'); // this should be an integer, beware
+    bpm = parseInt(getCookie('bpm'));
     // update bpm slider, label, and timer information here
 } else bpm = 100;
 
@@ -124,10 +124,16 @@ tempoSlider.addEventListener('input', () => {
     tempoLabel.textContent = `Speed: ${bpm} bpm`;
     setCookie('bpm', tempoSlider.value); // Save cookie
 });
-let beatsPerMeasure = 4;
+
+let beatsPerMeasure;
+// Load cookie if exists. If not load defaults
+if (getCookie('beatsPerMeasure') !== undefined) {
+    beatsPerMeasure = parseInt(getCookie('beatsPerMeasure'));
+    // update bpm slider, label, and timer information here
+} else beatsPerMeasure = 4;
+
 drawVisualMetronome(beatsPerMeasure);
 const metronome = new Metronome(updateChords, bpm, beatsPerMeasure, visualMetronome);
-
 
 
   ////////////////////////////////
@@ -238,8 +244,8 @@ const collectSlider = document.getElementById('slider-collection');
 
 // Load cookie if exists. If not load defaults
 if (getCookie('collection') !== undefined) {
-    collectSlider.value = getCookie('collection');
-    collectSliderEvent(getCookie('collection'));
+    collectSlider.value = parseInt(getCookie('collection'));
+    collectSliderEvent(collectSlider.value);
 } else collectSlider.value = 1;
 
 // Event listener for the slider
@@ -301,7 +307,6 @@ measureSlider.addEventListener('input', function(){
     metronome.beatsPerMeasure = beatsPerMeasure;
     metronome.vMetronome      = visualMetronome;
     metronome.vBeats          = visualMetronome.querySelectorAll('.beat');
-
     setCookie('beatsPerMeasure', measureSlider.value); // Save cookie
 });
 
@@ -311,12 +316,22 @@ measureSlider.addEventListener('input', function(){
  /// Volume (slider) ////
 ////////////////////////
 const volSlider = document.getElementById('slider-vol');
-volSlider.value = 1;
+
+// Load cookie if exists. If not load defaults
+if (getCookie('volume') !== undefined) {
+    volSlider.value = parseFloat(getCookie('volume'));
+    setClickVolume(volSlider.value);
+} else volSlider.value = 1;
+
 volSlider.addEventListener('input', function(){
-    metronome.click1.volume(volSlider.value);
-    metronome.click2.volume(volSlider.value);
+    setClickVolume(volSlider.value);
     setCookie('volume', volSlider.value); // Save cookie
 });
+
+function setClickVolume(value) {
+    metronome.click1.volume(value);
+    metronome.click2.volume(value);
+};
 
 
 
@@ -376,13 +391,12 @@ function setCookie(cName, cValue, expDays = 30) {
         date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
         const expires = "expires=" + date.toUTCString();
         // document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
-        // document.cookie = cName + "=" + cValue + "; " + expires; // No path
         document.cookie = `${cName}=${cValue}; ${expires}` // No path and template literal
 }
 
 // Use this command to delete test cookies
 // document.cookie = "bpm=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // Epoch time
-console.log(document.cookie)
+// console.log(document.cookie)
 
 // Load a Cookie function
 function getCookie(cName) {

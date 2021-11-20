@@ -171,7 +171,7 @@ const altsNodeList = document.getElementsByName('alterations');
 
 
 let alts;
-let prevBlackKeys;
+let prevBlackKeys = [];
 // Load cookie if exists. If not load defaults
 if (getCookie('alts') !== undefined) {
     alts = getCookie('alts');
@@ -196,7 +196,7 @@ function setAlts(altValue) {
             setCookie('alts', 'sharp'); // Save cookie
             break;
     };
-    console.log(blackKeysSharp)
+    console.log(prevBlackKeys)
     changeAlts(prevBlackKeys, whiteKeys, blackKeys);
 };
 

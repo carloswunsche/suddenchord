@@ -195,6 +195,7 @@ function setAlts(altValue) {
             setCookie('alts', 'sharp'); // Save cookie
             break;
     };
+    console.log(prevBlackKeys)
     changeAlts(prevBlackKeys, whiteKeys, blackKeys);
 };
 
@@ -206,7 +207,7 @@ for (const [i, val] of altsNodeList.entries()) {
 };
 
 function changeAlts(prevArray, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
-    console.log(prevArray)
+
     // Update collection for future bag refilling
     collection = [...arr1, ...arr2, ...arr3];
 

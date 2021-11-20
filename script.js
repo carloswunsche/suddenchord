@@ -179,8 +179,8 @@ if (getCookie('alts') !== undefined) {
 };
 setAlts(alts);
 
+let prevBlackKeys;
 function setAlts(altValue) {
-    let prevBlackKeys;
     switch (altValue) {
         case 'flat':  
             blackKeys = [...blackKeysFlat];

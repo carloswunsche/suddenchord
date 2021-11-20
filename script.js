@@ -196,7 +196,7 @@ function setAlts(altValue) {
             setCookie('alts', 'sharp'); // Save cookie
             break;
     };
-    console.log(prevBlackKeys)
+    console.log(blackKeysSharp)
     changeAlts(prevBlackKeys, whiteKeys, blackKeys);
 };
 

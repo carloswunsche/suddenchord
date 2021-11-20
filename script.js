@@ -205,19 +205,20 @@ for (const [i, val] of altsNodeList.entries()) {
     });
 };
 
-function changeAlts(arr, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
+function changeAlts(prevArray, arr1 = whiteKeys, arr2 = blackKeys, arr3 = []) {
+    console.log(prevArray)
     // Update collection for future bag refilling
     collection = [...arr1, ...arr2, ...arr3];
 
     // Update bag replacing previous alts with new ones
     for (const [i1, el1] of bag.entries()) {
-        for (const [i2, el2] of arr.entries()) {
+        for (const [i2, el2] of prevArray.entries()) {
             if (el1 === el2) bag[i1] = blackKeys[i2];
         };
     };
 
     // Update current and next
-    for (const [i, el] of arr.entries()) {
+    for (const [i, el] of prevArray.entries()) {
         if (current === el) current = blackKeys[i]; 
         if (next    === el) next    = blackKeys[i];
     };

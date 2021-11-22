@@ -19,6 +19,8 @@ function takeNoteFromBag() {
     return note;
 };
 
+//aver
+
 // Changes the content of divs currChord and nextChord
 function changeDivContent(chord, note, flatSharp, type) {
     //Clear all elements first

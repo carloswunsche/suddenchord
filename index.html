@@ -26,26 +26,26 @@
         <div class="modal-body">
           <div class="setting">
             <span class="setting-title" id="label-collection">Collection: Majors</span>
-            <input class="slider" type="range" min="1" max="5" step="1" id="slider-collection"/>
+            <input class="slider" value="1" type="range" min="1" max="5" step="1" id="slider-collection"/>
           </div>
           <div class="setting">
             <span class="setting-title">Alterations</span>
-              <input type="radio" id="flat" name="alterations" value="flat">
+              <input type="radio" id="flat" name="alterations" value="flat" checked="true">
               <label for="flat">Flat only (&#9837;)</label>
               <input type="radio" id="sharp" name="alterations" value="sharp">
               <label for="sharp">Sharp only (&#9839;)</label>
           </div>
           <div class="setting">
-            <span class="setting-title" id="label-bpm">Speed: </span>
-            <input class="slider" type="range" min="20" max="280" step="1" id="slider-bpm"/>
+            <span class="setting-title" id="label-bpm">Speed: 90 bpm</span>
+            <input class="slider" value="90" type="range" min="50" max="150" step="1" id="slider-bpm"/>
           </div>
           <div class="setting">
-            <span class="setting-title" id="label-beats">Beats per measure: </span>
-            <input class="slider" type="range" min="1" max="8" step="1" id="slider-beats"/>
+            <span class="setting-title" id="label-beats">Beats per measure: 4</span>
+            <input class="slider" value="4" type="range" min="1" max="8" step="1" id="slider-beats"/>
           </div>
           <div class="setting">
             <span class="setting-title" >Volume: </span>
-            <input class="slider" type="range" min="0" max="1" step="0.1" id="slider-vol"/>
+            <input class="slider" value="1" type="range" min="0" max="1" step="0.1" id="slider-vol"/>
           </div>
         </div>
       </div>
@@ -69,10 +69,6 @@
 
       <!-- Visual metronome -->
       <div class="metronome">
-        <div class="beat"></div>
-        <div class="beat"></div>
-        <div class="beat"></div>
-        <div class="beat"></div>
         <div class="beat"></div>
         <div class="beat"></div>
         <div class="beat"></div>
